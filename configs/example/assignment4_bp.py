@@ -32,10 +32,19 @@ system.mem_ranges = [AddrRange('512MB')]
 
 # Specify the CPU
 system.cpu = O3CPU()
+#To change the O3CPU model to a single-issue pipeline in gem5, 
+# you can set the issueWidth, dispatchWidth, commitWidth, and decodeWidth parameters to 1, 
+# as this will limit the CPU to issuing, dispatching, committing, and decoding only one instruction per cycle. 
+# Add the following lines to your code after defining system.cpu
 system.cpu.issueWidth = 1
 system.cpu.dispatchWidth = 1
 system.cpu.commitWidth = 1
 system.cpu.decodeWidth = 1
+
+
+# Add a TournamentBP as the branch predictor
+# TournamentBP uses both local and global history to make predictions, selecting the most accurate one based on a selector
+system.cpu.branchPred = TournamentBP()
 
 # Create L1 caches with sizes from options
 system.cache_line_size = 128

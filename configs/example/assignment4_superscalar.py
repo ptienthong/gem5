@@ -7,7 +7,7 @@ import argparse
 
 # Argument parsing for binary and cache sizes
 parser = argparse.ArgumentParser(description='A simple system with 2-level cache.')
-parser.add_argument("binary", default="tests/test-progs/workloads/bin/workload1", nargs="?", type=str,
+parser.add_argument("binary", default="tests/test-progs/workloads/bin/additionVecs", nargs="?", type=str,
                     help="Path to the binary to execute.")
 parser.add_argument("--l1i_size", default="16kB",
                     help="L1 instruction cache size. Default: 16kB.")
@@ -32,10 +32,18 @@ system.mem_ranges = [AddrRange('512MB')]
 
 # Specify the CPU
 system.cpu = O3CPU()
-system.cpu.issueWidth = 1
-system.cpu.dispatchWidth = 1
-system.cpu.commitWidth = 1
-system.cpu.decodeWidth = 1
+#To change the O3CPU model to a single issue pipeline in gem5, 
+# you can set the issueWidth, dispatchWidth, commitWidth, and decodeWidth parameters to 1, 
+# as this will limit the CPU to issuing, dispatching, committing, and decoding only one instruction per cycle. 
+# Add the following lines to your code after defining system.cpu
+system.cpu.issueWidth = 8
+system.cpu.dispatchWidth = 8
+system.cpu.commitWidth = 8
+system.cpu.decodeWidth = 4
+
+# Add a TournamentBP as the branch predictor
+# TournamentBP uses both local and global history to make predictions, selecting the most accurate one based on a selector
+system.cpu.branchPred = TournamentBP()
 
 # Create L1 caches with sizes from options
 system.cache_line_size = 128
