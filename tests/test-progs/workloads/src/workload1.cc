@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 // use c++11 to compiler
-const int size = 10;
+const int size = 65;
 const int num = 100;
 template<typename T>
 auto vectorAddition(const std::vector<T>& v1, const std::vector<T>& v2)  -> std::vector<T> {
@@ -64,7 +64,7 @@ int main(){
     auto end = clock();
     
     // calculate time taken
-    auto time_taken = static_cast<double>((end - start) / CLOCKS_PER_SEC);
+    auto time_taken = static_cast<double>(end - start) / CLOCKS_PER_SEC;
     printf("Vector Operation took %f seconds \n", time_taken);
 
     return 0;
