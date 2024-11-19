@@ -228,6 +228,7 @@ class MinorDefaultFloatSimdFU(MinorFU):
 
     timings = [MinorFUTiming(description="FloatSimd", srcRegsRelativeLats=[2])]
     opLat = 6
+    issueLat = 1
 
 
 class MinorDefaultPredFU(MinorFU):
